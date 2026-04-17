@@ -1,0 +1,123 @@
+.data-table-widget {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  color: #1a1a1a;
+}
+
+.data-table-widget__title {
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 16px 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.data-table-wrapper {
+  overflow: auto;
+  flex: 1;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+.data-table--striped tbody tr:nth-child(odd) {
+  background-color: #f9fafb;
+}
+
+.data-table__head--sticky thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.data-table__th {
+  background-color: #f3f4f6;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #374151;
+  border-bottom: 2px solid #e5e7eb;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.data-table__th:hover {
+  background-color: #e9eaec;
+}
+
+.data-table__th-content {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.data-table__th--left .data-table__th-content { justify-content: flex-start; }
+.data-table__th--center .data-table__th-content { justify-content: center; }
+.data-table__th--right .data-table__th-content { justify-content: flex-end; }
+
+.data-table__sort-icon {
+  color: #6366f1;
+}
+
+.data-table__td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #111827;
+}
+
+.data-table__td--left  { text-align: left; }
+.data-table__td--center { text-align: center; }
+.data-table__td--right { text-align: right; }
+
+.data-table__row:hover {
+  background-color: #f0f4ff !important;
+}
+
+.data-table__empty {
+  text-align: center;
+  padding: 32px 16px;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.data-table__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 10px 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.data-table__page-btn {
+  padding: 6px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  color: #374151;
+}
+
+.data-table__page-btn:hover:not(:disabled) {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.data-table__page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.data-table__page-info {
+  font-size: 13px;
+  color: #6b7280;
+}

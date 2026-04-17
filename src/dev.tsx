@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { KpiCard } from "./widgets/KpiCard";
 import { DataTable } from "./widgets/DataTable";
 import { BarChart } from "./widgets/BarChart";
+import { PowerBiEmbed } from "./widgets/PowerBiEmbed";
 import "./styles/global.css";
 
 const kpiConfigs = [
@@ -49,7 +50,34 @@ const chartConfig = {
   valueFormat: "currency" as const,
 };
 
+// Power BI dev config — fill in real IDs to test embedding
+const pbiConfig = {
+  reportId: import.meta.env.VITE_PBI_REPORT_ID ?? "",
+  workspaceId: import.meta.env.VITE_PBI_WORKSPACE_ID ?? "",
+  authMode: "aad-token" as const,
+  accessToken: import.meta.env.VITE_PBI_ACCESS_TOKEN ?? "",
+  title: "Sales Performance Report",
+  showToolbar: true,
+  showFilterPane: false,
+  showNavPane: false,
+  pageView: "fitToWidth" as const,
+  filters: [
+    { table: "Date", column: "Year", values: [2024], operator: "In" as const },
+  ],
+};
+
 function DevApp() {
+  const [pbiRegion, setPbiRegion] = useState<string>("West");
+
+  // Simulates a Workshop variable driving Power BI filters
+  const livePbiConfig = {
+    ...pbiConfig,
+    filters: [
+      { table: "Date", column: "Year", values: [2024], operator: "In" as const },
+      { table: "Sales", column: "Region", values: [pbiRegion], operator: "In" as const },
+    ],
+  };
+
   return (
     <div className="dev-app">
       <header className="dev-header">
@@ -77,6 +105,29 @@ function DevApp() {
         <div className="table-container">
           <DataTable config={tableConfig} />
         </div>
+      </section>
+
+      <section className="dev-section">
+        <h2>Power BI Embed</h2>
+        <div className="pbi-filter-bar">
+          <label htmlFor="region-select">Workshop variable → Region filter:</label>
+          <select
+            id="region-select"
+            value={pbiRegion}
+            onChange={(e) => setPbiRegion(e.target.value)}
+          >
+            {["West", "East", "Central", "North", "South"].map((r) => (
+              <option key={r} value={r}>{r}</option>
+            ))}
+          </select>
+        </div>
+        <div className="pbi-container-wrapper">
+          <PowerBiEmbed config={livePbiConfig} />
+        </div>
+        <p className="pbi-dev-note">
+          Set <code>VITE_PBI_REPORT_ID</code>, <code>VITE_PBI_WORKSPACE_ID</code>, and{" "}
+          <code>VITE_PBI_ACCESS_TOKEN</code> in a <code>.env.local</code> file to load a real report.
+        </p>
       </section>
     </div>
   );
